@@ -1,5 +1,6 @@
 import streamlit as st
 from openai import OpenAI
+import time
 
 st.set_page_config(page_title="Générateur de Hashtags Instagram", page_icon="📱")
 st.title("📱 Générateur de Hashtags pour Instagram")
@@ -25,7 +26,10 @@ if st.button("🚀 Générer les meilleurs hashtags"):
             f"Langue : {langue.lower()}."
         )
 
-        try:
+        with st.spinner("🧹 Henry aspire tes hashtags... Patiente un instant !"):
+            # Affiche le GIF Henry pendant le traitement
+            st.image("images/henry.gif")
+
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -34,6 +38,12 @@ if st.button("🚀 Générer les meilleurs hashtags"):
                 temperature=0.7,
                 max_tokens=200
             )
+
+            hashtags = response.choices[0].message.content.strip()
+
+        st.success("✅ Hashtags générés avec succès :")
+        st.code(hashtags)
+
 
             hashtags = response.choices[0].message.content.strip()
             st.success("✅ Hashtags générés avec succès :")
