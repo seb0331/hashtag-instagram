@@ -3,6 +3,7 @@ from openai import OpenAI
 
 st.set_page_config(page_title="Générateur de Hashtags Instagram", page_icon="📱")
 st.title("📱 Générateur de Hashtags pour Instagram pour **Samantha Morgane Auteure**")
+st.title2("pour **Samantha Morgane Auteure**")
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
