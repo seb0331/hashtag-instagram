@@ -1,26 +1,20 @@
 import streamlit as st
 from openai import OpenAI
 
-# Titre de l'application
 st.set_page_config(page_title="Générateur de Hashtags Instagram", page_icon="📱")
 st.title("📱 Générateur de Hashtags pour Instagram")
 
-# Chargement de la clé API OpenAI depuis les secrets Streamlit
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-# Champ de texte pour la description de la vidéo
 description = st.text_area("📝 Décris ta vidéo Instagram :", placeholder="Ex : Une vidéo de danse TikTok au bord de la mer...")
 
-# Sélecteur de langue (optionnel)
 langue = st.selectbox("🌍 Langue des hashtags :", ["Français", "Anglais"])
 
-# Bouton pour générer
 if st.button("🚀 Générer les meilleurs hashtags"):
 
     if not description.strip():
         st.warning("👉 Merci de décrire ta vidéo avant de générer les hashtags.")
     else:
-        # Prompt personnalisé en fonction de la langue
         system_prompt = (
             "Tu es un expert en stratégie de viralité sur Instagram. "
             "Génère uniquement une liste des meilleurs hashtags (sans autre texte), séparés par des espaces, "
@@ -29,7 +23,6 @@ if st.button("🚀 Générer les meilleurs hashtags"):
         )
 
         try:
-            # Appel à l'API OpenAI avec la nouvelle syntaxe
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -44,4 +37,4 @@ if st.button("🚀 Générer les meilleurs hashtags"):
             st.code(hashtags)
 
         except Exception as e:
-            st.error(f"❌ Erreur lors de l'appel
+            st.error(f"❌ Erreur lors de l'appel à l'API : {str(e)}")
